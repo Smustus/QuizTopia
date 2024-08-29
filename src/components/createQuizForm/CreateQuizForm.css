@@ -1,0 +1,25 @@
+.createQuizForm {
+  max-width: 1000px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 12px;
+
+  .inputField {
+    width: 100%;
+    margin: 10px;
+  }
+
+  input {
+    width: 100%;
+    min-width: 280px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .createQuizForm {
+    flex-direction: column;
+    margin: 0px 24px;
+  }
+}

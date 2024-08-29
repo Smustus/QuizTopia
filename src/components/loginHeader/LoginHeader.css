@@ -1,0 +1,50 @@
+.loginHeader {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 6px 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif
+}
+
+.loginHeader a {
+  font-size: 1rem;
+  position: relative;
+  display: inline-block;
+  padding: 2px;
+  margin: 0 24px 4px 24px;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.loginHeader a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 2px;
+  right: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  transition: width 0.3s ease, right 0.3s ease;
+}
+
+.loginHeader a:hover::after, 
+.loginHeader .active::after {
+  width: 100%;
+  right: 0;
+}
+
+.loginHeader a:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.loginHeader .active {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+

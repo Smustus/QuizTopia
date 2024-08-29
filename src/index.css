@@ -1,0 +1,102 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: white;
+  color: black;
+}
+
+a, button {
+  cursor: pointer;
+}
+
+button {
+  font-size: clamp(1rem, 0.8rem + 1vw, 1.3rem);
+  background-color: rgb(253, 205, 177);
+  min-width: fit-content;
+  width: clamp(35px, 30px + 1vw, 70px);
+  height: clamp(35px, 30px + 1vw, 70px);
+  min-height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  border: none;
+  box-shadow: -1px 1px 1px black;
+  margin: 6px;
+  color: rgba(0, 0, 0, 0.8);
+
+  img {
+    width: clamp(18px, 12px + 1vw, 25px);
+    height: clamp(18px, 12px + 1vw, 25px);
+  }
+}
+
+button:hover {
+  background-color: rgb(255, 224, 206);;
+}
+
+
+button:active {
+  transform: scale(96%);
+  box-shadow: -2px 2px 1px black;
+}
+
+a {
+  font-size: clamp(1.8rem, 1.6rem + 1vw, 2.4rem);
+}
+
+a:active {
+  transform: scale(96%);
+}
+
+h1, h2, h3, h4 {
+  font-weight: 600;
+}
+
+h1 {
+  font-size: clamp(2.0rem, 2.0rem + 1vw, 2.8rem);
+}
+
+h2 {
+  font-size: clamp(1.8rem, 1.6rem + 1vw, 2.4rem);
+}
+
+h3 {
+  font-size: clamp(1.2rem, 1rem + 1vw, 1.6em);
+}
+
+h4 {
+  font-size: clamp(0.9rem, 0.8rem + 1vw, 1.4rem);
+}
+
+p {
+  font-size: clamp(0.9rem, 0.8rem + 1vw, 1.4rem);
+}

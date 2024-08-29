@@ -1,0 +1,11 @@
+#map {
+   height: 600px;
+   width: 80%;
+   max-width: 1000px;
+   margin: 16px;
+   font-size: 1rem;
+
+   a {
+      font-size: 1rem;
+   }
+}

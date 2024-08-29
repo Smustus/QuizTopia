@@ -1,0 +1,24 @@
+.quizCard {
+  background-color: rgb(247, 191, 191);
+  color: black;
+  padding: 6px;
+  margin: 6px;
+  width: 240px;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: -1px 1px 1px rgb(0, 0, 0);
+}
+
+.quizCard:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: black;
+  padding: 6px;
+  margin: 6px;
+  width: 240px;
+  cursor: pointer;
+}
+
+.quizCard:active {
+  transform: scale(98%);
+  box-shadow: -2px 2px 1px black;
+}
