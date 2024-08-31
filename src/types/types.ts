@@ -11,9 +11,6 @@ export type MapQuestion = {
   question: string;
 }
 
-export type QuizQuestion = {
+export type QuizQuestion = MapQuestion & {
   name: string,
-  question: string,
-  answer: string,
-  location: { longitude: string, latitude: string }
 }

@@ -1,24 +1,60 @@
 .quizCard {
-  background-color: rgb(247, 191, 191);
-  color: black;
-  padding: 6px;
-  margin: 6px;
-  width: 240px;
+  background: linear-gradient(135deg, #bdb864, #af4261);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  border-radius: 2px;
-  box-shadow: -1px 1px 1px rgb(0, 0, 0);
+  overflow: hidden;
+  position: relative;
 }
 
 .quizCard:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-  color: black;
-  padding: 6px;
-  margin: 6px;
-  width: 240px;
-  cursor: pointer;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .quizCard:active {
-  transform: scale(98%);
-  box-shadow: -2px 2px 1px black;
+  transform: translateY(-5px) scale(98%);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.quizCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.quizCard h3 {
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.questionBadge {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 5px 10px;
+  margin: 0px 5px;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.quizCardBody {
+  font-size: 1.1em;
+  font-weight: 400;
+}
+
+.quizCardBody p {
+  margin: 5px 0;
+}
+
+.quizCardBody p:first-of-type {
+  font-weight: 600;
+  color: #e0e0e0;
 }

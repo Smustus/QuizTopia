@@ -62,7 +62,7 @@ export async function loginAcc(userData: any){
     }
 }
 
-export async function createQuiz(quizData: string){
+export async function createQuiz(quizName: {name: string}){
     try {
         const response = await fetch(`${BASE_URL}/quiz`, {
             method: 'POST',
@@ -70,14 +70,14 @@ export async function createQuiz(quizData: string){
                 'Content-Type': 'application/json',
                 'Authorization': `${sessionStorage.getItem('token')}`
             },
-            body: JSON.stringify(quizData)
+            body: JSON.stringify(quizName)
         });
         if (!response.ok) {
             throw new Error('Could not create quiz')
         }
         const data = await response.json();
         console.log(data);
-        return data;
+        return data.quizId;
         
     } catch (error: any) {
         console.error(error);
@@ -98,7 +98,6 @@ export async function createQuizQuestion(quizQuestion: QuizQuestion){
             throw new Error('Could not create quiz')
         }
         const data = await response.json();
-        console.log(data);
         return data;
         
     } catch (error: any) {

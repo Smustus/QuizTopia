@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import './LoginHeader.css'
 import { setLoginState, setUsername } from '../../reducers/loggedInReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const LoginHeader = () => {
   const loggedIn = useSelector((state: any) => state.loginState.isLoggedIn);
   const dispatch = useDispatch();  
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function isloggedIn(){
@@ -33,6 +34,7 @@ const LoginHeader = () => {
     sessionStorage.setItem('token', '');
     dispatch(setLoginState(false));
     dispatch(setUsername(""));
+    navigate("/");
   }
 
   return (
@@ -49,14 +51,14 @@ const LoginHeader = () => {
               </NavLink>
 
               <NavLink to='/createquiz'className={({ isActive }) => isActive ? 'active' : ''}>
-                Skapa Quiz
+                Create quiz
               </NavLink>
 
-              <a href='/' onClick={(e) => {
+              <a id='logoutLink' href='/' onClick={(e) => {
                   e.preventDefault();
                   handleLogout();
                 }}>
-                Logga ut
+                Logout
               </a>
             </article> 
             :
@@ -70,11 +72,11 @@ const LoginHeader = () => {
               </NavLink>
 
               <NavLink to='/login' className={({ isActive }) => isActive ? 'active' : ''}>
-                Logga in
+                Login
               </NavLink>
 
               <NavLink to='/create' className={({ isActive }) => isActive ? 'active' : ''}>
-                Skapa konto
+                Create account
               </NavLink>
             </article>
         }

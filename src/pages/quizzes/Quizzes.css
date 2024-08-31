@@ -1,0 +1,20 @@
+.quizList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.deleteQuizBtn {
+  padding: 16px;
+}
+
+h3 {
+  margin: 12px 0px;
+  text-align: start;
+}
+
+.quizzesMain {
+  height: 100vh;
+  background: rgb(88,71,71);
+  background: linear-gradient(330deg, rgba(88,71,71,1) 20%, rgba(60,53,53,1) 40%, rgba(54,48,48,1) 60%, rgba(39,36,36,1) 80%);
+  color: white;
+}

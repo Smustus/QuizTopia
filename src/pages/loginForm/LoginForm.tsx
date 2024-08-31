@@ -46,7 +46,7 @@ export default function LoginForm() {
             <h2>Logga in</h2>
                 <form onSubmit={handleSubmit}>        
                     <fieldset className="inputField">
-                        <legend>Användarnamn</legend>
+                        <legend>Username</legend>
                         <input
                             type="text"
                             name="username"
@@ -56,7 +56,7 @@ export default function LoginForm() {
                         />
                     </fieldset>
                     <fieldset className="inputField">
-                        <legend>Lösenord</legend>
+                        <legend>Password</legend>
                         <input
                             type="password"
                             name="password"
@@ -66,7 +66,7 @@ export default function LoginForm() {
                         />
                     </fieldset>
                   
-                    <button type="submit">Logga in</button>
+                    <button type="submit">Login</button>
                 </form>
             </main>
         </>

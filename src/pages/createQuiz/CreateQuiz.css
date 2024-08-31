@@ -1,0 +1,28 @@
+.createQuizMain {
+  width: 100vw;
+  display: flex;
+  padding: 6px 20px 20px 20px;
+  background-color: white;
+
+  #map {
+    width: 100%;
+  }
+}
+
+.infoText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 8px;
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ol li {
+    text-align: start;
+    font-size: 1.4rem;
+  }
+}

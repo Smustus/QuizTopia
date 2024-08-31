@@ -1,6 +1,7 @@
-.quiz {
-  background-color: white;
-  color: black;
-  padding: 6px;
-  margin: 6px;
+.homeMain {
+  padding: 12px;
+  background: rgb(88,71,71);
+  background: linear-gradient(330deg, rgba(88,71,71,1) 20%, rgba(60,53,53,1) 40%, rgba(54,48,48,1) 60%, rgba(39,36,36,1) 80%);
+  color: white;
+  height: 100vh;
 }

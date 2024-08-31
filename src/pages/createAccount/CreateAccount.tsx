@@ -21,8 +21,8 @@ export default function CreateAccount() {
         });
     }
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         try {
             const acc = await createAcc(formData);
             console.log(acc);
@@ -40,10 +40,10 @@ export default function CreateAccount() {
     <>
         <LoginHeader />
         <main>
-            <h2>Skapa konto</h2>
+            <h2>Create account</h2>
             <form onSubmit={handleSubmit}>        
                     <fieldset className="inputField">
-                        <legend>Användarnamn</legend>
+                        <legend>Username</legend>
                         <input
                             type="text"
                             name="username"
@@ -53,7 +53,7 @@ export default function CreateAccount() {
                         />
                     </fieldset>
                     <fieldset className="inputField">
-                        <legend>Lösenord</legend>
+                        <legend>Password</legend>
                         <input
                             type="password"
                             name="password"
@@ -63,7 +63,7 @@ export default function CreateAccount() {
                         />
                     </fieldset>
                   
-                    <button type="submit">Skapa konto</button>
+                    <button type="submit">Create</button>
                 </form>
         </main>
     </>
