@@ -13,6 +13,7 @@ const LoginHeader = ({className}: LoginHeaderProps) => {
   const dispatch = useDispatch();  
   const navigate = useNavigate();
 
+  //On dispatch state update, update the logged in state and update the redux state with the session storage (because: practice)
   useEffect(() => {
     async function isloggedIn(){
       try {
@@ -34,11 +35,14 @@ const LoginHeader = ({className}: LoginHeaderProps) => {
     isloggedIn();
   }, [dispatch]);
 
+  //Function to handle reset of session and state values whenever the user logs out
   const handleLogout = () => {
     sessionStorage.setItem('token', '');
+    sessionStorage.setItem('username', '');
+    sessionStorage.setItem('userId', '');
     dispatch(setLoginState(false));
     dispatch(setUsername(""));
-    navigate("/");
+    navigate("/login");
   }
 
   return (
@@ -58,7 +62,7 @@ const LoginHeader = ({className}: LoginHeaderProps) => {
                 Create quiz
               </NavLink>
 
-              <a id='logoutLink' href='/' onClick={(e) => {
+              <a id='logoutLink' href='/login' onClick={(e) => {
                   e.preventDefault();
                   handleLogout();
                 }}>

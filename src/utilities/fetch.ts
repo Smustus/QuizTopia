@@ -40,7 +40,6 @@ export async function createAcc(userData: any) {
 
 export async function loginAcc(userData: any){
     try {
-        sessionStorage.setItem('username', userData.username);
         const response = await fetch(`${BASE_URL}/auth/login`, {
             method: 'POST',
             headers: {
@@ -53,8 +52,10 @@ export async function loginAcc(userData: any){
         }
         const data = await response.json();
         console.log(data);
-        sessionStorage.setItem('token', data.token);
-        
+        if(data.success){
+            sessionStorage.setItem('username', userData.username);
+            sessionStorage.setItem('token', data.token);
+        }
         return data;
         
     } catch (error: any) {

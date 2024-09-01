@@ -10,6 +10,7 @@ import { formatStringUpperCase } from '../../utilities/formatter';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setLoginState, setUsername } from '../../reducers/loggedInReducer';
+import AnswerQuizForm from '../answerQuizForm/AnswerQuizForm';
 
 interface LeafletMapProps {
   coordinates?: GeolocationCoordinates | undefined;
@@ -26,12 +27,16 @@ const LeafletMap = ({coordinates, activeQuiz}: LeafletMapProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [quizName, setQuizname] = useState<{name: string}>({name: ''});
   const [quizCreated, setQuizCreated] = useState<boolean>(false);
+  const [question, setQuestion] = useState<string | null>(null);
+
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log(markerCoords);       
-  }, [markerCoords]);
+    console.log(markerCoords); 
+    console.log(question);
+           
+  }, [markerCoords, question]);
 
   useEffect(() => {
     if(!coordinates || !position?.latitude){
@@ -46,6 +51,7 @@ const LeafletMap = ({coordinates, activeQuiz}: LeafletMapProps) => {
     }
   }, [map, position]);
 
+  //Generates a map whenever the position state is updated, if theres currently not one generated.
   useEffect(() => {
     if (position?.latitude) {
       const mapContainer = document.getElementById('map');
@@ -69,6 +75,7 @@ const LeafletMap = ({coordinates, activeQuiz}: LeafletMapProps) => {
     }
   }, [position]);
 
+  //When user wants to create a quiz. On map, quiz creation and question state update, give the user the option to generate markers and add questions to their quiz (questions are only available whenever the user want to do a quiz, not create one)
   useEffect(() => {
     if (map && quizCreated && questions.length === 0) {
       function onMapClick(e: LeafletMouseEvent) {
@@ -87,11 +94,18 @@ const LeafletMap = ({coordinates, activeQuiz}: LeafletMapProps) => {
     }
   }, [map, quizCreated, questions.length]);
 
+  //When user want to do a quiz. On map and question state update, generate markers with respective questions (questions are only available whenever the user want to do a quiz, not create one)
   useEffect(() => {
     if(map && questions.length > 0){
       questions.map((question: MapQuestion) => {
         const marker = L.marker([question.location.latitude, question.location.longitude]).addTo(map);
         marker.bindPopup(question.question).openPopup();
+
+        marker.on('click', (e) => {
+          console.log(e.target._latlng);
+          setQuestion(e.target._popup._content);
+          setMarkerCoords(e.target._latlng);
+        })
       });
     }
   }, [map, questions]);
@@ -100,6 +114,7 @@ const LeafletMap = ({coordinates, activeQuiz}: LeafletMapProps) => {
     setQuizname({ name: e.target.value });
   }
 
+  //Handle submission of form when user trying to create a quiz, if the user token is invalid the quiz will return false and the user is directed to login again.
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -108,6 +123,8 @@ const LeafletMap = ({coordinates, activeQuiz}: LeafletMapProps) => {
         console.log(quiz);
         if(!quiz){
           sessionStorage.setItem('token', '');
+          sessionStorage.setItem('username', '');
+          sessionStorage.setItem('userId', '');
           dispatch(setLoginState(false));
           dispatch(setUsername(""));
           navigate("/login");
@@ -144,13 +161,15 @@ const LeafletMap = ({coordinates, activeQuiz}: LeafletMapProps) => {
           : 
           <h4>{`Quiz: ${formatStringUpperCase(quizName.name)}`}</h4>
         )
-        
       }
 
       {
         activeQuiz ? (loading ? <div id="map"><Loader /></div> : <div id="map"></div>) 
         : 
         (loading ? <div id="map"><Loader /></div> : <div id="map"></div>)
+      }
+      {
+        activeQuiz && question && <AnswerQuizForm question={question} markerCoords={markerCoords} activeQuiz={activeQuiz} />
       }
       
       {markerCoords && quizCreated && quizName.name.length > 0 &&      

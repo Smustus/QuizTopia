@@ -8,6 +8,7 @@ import LeafletMap from '../../components/leafletMap/LeafletMap';
 import Loader from '../../components/loader/Loader';
 import { useSelector } from 'react-redux';
 import { formatStringUpperCase } from '../../utilities/formatter';
+import { ConfirmModal } from '../../components/confirmModal/ConfirmModal';
 
 const Quizzes = () => {
 
@@ -16,7 +17,10 @@ const Quizzes = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [quizToDelete, setQuizToDelete] = useState<string | null>(null);
 
+  //On component load -> fetch quizzes and update the quiz-state with respective values
   useEffect(() => {
     async function loadQuizes() {
       const data = await fetchAllQuizes();
@@ -33,10 +37,12 @@ const Quizzes = () => {
     }
   }, [activeQuiz]);
 
+  //Closing active quiz
   const handleCloseQuiz = () => {
     setActiveQuiz(null);
   }
 
+  //Functions to generate filtered/unfiltered quizzes in the DOM
   const renderUserQuizList = () => {
     const userQuizzes = quizzes.filter((quiz: Quiz) => {
       return quiz.username === username;
@@ -59,8 +65,8 @@ const Quizzes = () => {
     </section>
   );
 
-
-  const handleDelete = async (quizId: string) => {
+  //Button generated whenever the logged in user = creator of the quiz, gives an option to delete a quiz
+  /* const handleDelete = async (quizId: string) => {
     try {
       const deletedQuiz = await deleteQuiz(quizId);
       console.log(deletedQuiz);
@@ -70,7 +76,28 @@ const Quizzes = () => {
     } catch (error) {
       console.error("Failed to delete quiz:", error);
     }
-  }
+  } */
+
+    const handleDelete = (quizId: string) => {
+      setQuizToDelete(quizId);
+      setIsModalOpen(true);
+    };
+
+    const handleConfirmDelete = async () => {
+      if (quizToDelete) {
+        try {
+          const deletedQuiz = await deleteQuiz(quizToDelete);
+          console.log(deletedQuiz);
+          setQuizzes((prevQuizzes) => prevQuizzes.filter(quiz => quiz.quizId !== quizToDelete));
+          setActiveQuiz(null);
+        } catch (error) {
+          console.error("Failed to delete quiz:", error);
+        } finally {
+          setIsModalOpen(false);
+          setQuizToDelete(null);
+        }
+      }
+    };
 
   return (
     <>
@@ -82,9 +109,14 @@ const Quizzes = () => {
             <button className='closeBtn' onClick={handleCloseQuiz}>&#x2715;</button>    
             <LeafletMap activeQuiz={activeQuiz} />
             {
-              (sessionStorage.getItem('userId') === activeQuiz.userId) ?
+              (sessionStorage.getItem('username') === activeQuiz.username) ?
                 <button className='deleteQuizBtn' onClick={() => handleDelete(activeQuiz.quizId)}>Delete quiz</button> : ""
             }
+             <ConfirmModal 
+                isOpen={isModalOpen} 
+                onClose={() => setIsModalOpen(false)} 
+                onConfirm={handleConfirmDelete} 
+              />
           </main>
         ) :
         !loading && (

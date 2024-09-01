@@ -17,6 +17,7 @@ export default function LoginForm() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    //Too obvious
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({ 
@@ -25,6 +26,7 @@ export default function LoginForm() {
         });
     }
 
+    //Submission of form, updates redux state and navigate to homepage
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -34,7 +36,7 @@ export default function LoginForm() {
             dispatch(setUsername(formData.username))
             navigate("/");
         
-        } catch (error) {
+         } catch (error) {
             console.error(error);
         }
     }

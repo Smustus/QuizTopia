@@ -15,7 +15,6 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
 
   const {lng, lat} = markerCoords;
   
-  
   useEffect(() => {
     console.log(markerCoords);
   },  [markerCoords]);
@@ -33,6 +32,7 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
     console.log(questions);
   }, [questions]);
 
+  //Updates the formData whenever the user changes longitute and latitute (puts a new mark)
   useEffect(() => {
     setFormData((prevData) => ({
       ...prevData,
@@ -49,6 +49,7 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
     });
   }
 
+  //Handle form submission, update the questions state to be generated in the DOM, posts the question to the API (add to the quiz) and resets the input fields
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);

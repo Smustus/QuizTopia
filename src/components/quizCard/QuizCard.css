@@ -1,5 +1,5 @@
 .quizCard {
-  background: linear-gradient(135deg, #bdb864, #af4261);
+  background: linear-gradient(180deg, #bdb864, #af4261);
   color: #ffffff;
   border-radius: 10px;
   padding: 20px;
@@ -8,7 +8,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   overflow: hidden;
-  position: relative;
+  /* position: relative; */
 }
 
 .quizCard:hover {
@@ -51,7 +51,7 @@
 }
 
 .quizCardBody p {
-  margin: 5px 0;
+  margin: 5px 0px;
 }
 
 .quizCardBody p:first-of-type {

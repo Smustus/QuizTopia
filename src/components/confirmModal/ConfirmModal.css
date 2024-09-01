@@ -1,0 +1,28 @@
+.modal-backdrop {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+
+  .modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    section {
+      display: flex;
+
+      button {
+        padding: 20px;
+      }
+
+      .modalDeleteBtn {
+        background: linear-gradient(0deg, rgb(65, 5, 5) 20%, rgb(85, 15, 15) 40%, rgb(105, 25, 25) 60%, rgb(125, 35, 35) 80%);
+      }
+
+      .modalDeleteBtn:hover {
+        background: linear-gradient(180deg, rgb(65, 5, 5) 10%, rgb(105, 25, 25) 30%, rgb(105, 25, 25) 70%, rgb(65, 5, 5) 90%);
+      }
+    }
+  }
+}

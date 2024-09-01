@@ -1,0 +1,28 @@
+.answerQuizForm {
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 24px;
+/* background-color: white; */
+
+  .inputField {
+    margin: 0px 10px 0 50px;
+
+    legend {
+      background-color: rgb(255, 255, 255);
+      border-radius: 6px;
+      border: 1px solid black;
+      padding: 0 4px;
+    }
+  }
+
+  .questionField {
+    color: black;
+    padding: 0px 20px;
+  }
+
+  .answerQuizFormBtn {
+    padding: 16px;
+  }
+}
+

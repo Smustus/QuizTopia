@@ -1,28 +1,22 @@
 .loginHeader {
-  background-color: rgb(255, 255, 255);
   display: flex;
   justify-content: end;
   align-items: center;
   padding: 8px 12px;
-  font-size: 1rem;
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
-  background: rgb(255, 255, 255);
-  background: linear-gradient(180deg, rgb(255, 255, 255) 20%, rgb(240, 240, 240) 40%, rgb(220, 220, 220) 60%, rgb(200, 200, 200) 90%);
-}
-
-.white {
-  background: white;
+ /*  background: linear-gradient(180deg, rgb(255, 255, 255) 20%, rgb(240, 240, 240) 40%, rgb(220, 220, 220) 60%, rgb(200, 200, 200) 90%); */
+  background: transparent;
 }
 
 .loginHeader a {
-  font-size: 1rem;
+  font-size: clamp(1rem, 0.5rem + 1vw, 1.4rem);
   position: relative;
   display: inline-block;
   padding: 2px;
   margin: 0 24px 4px 24px;
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 1);
   font-weight: bold;
   transition: color 0.3s;
 }
@@ -35,7 +29,7 @@
   display: block;
   margin-top: 2px;
   right: 50%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 0.6);
   transition: width 0.3s ease, right 0.3s ease;
 }
 
@@ -46,15 +40,57 @@
 }
 
 .loginHeader a:hover {
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .loginHeader .active {
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.white {
+  background: white;
+
+  a {
+    font-size: clamp(1rem, 0.5rem + 1vw, 1.4rem);
+    position: relative;
+    display: inline-block;
+    padding: 2px;
+    margin: 0 24px 4px 24px;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 2px;
+    right: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    transition: width 0.3s ease, right 0.3s ease;
+  }
+  
+  a:hover::after, 
+  .active::after {
+    width: 100%;
+    right: 0;
+  }
+  
+  a:hover {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .active {
+    color: rgba(0, 0, 0, 0.6);
+  }
 }
 
 #logoutLink:hover {
-  color: rgba(133, 0, 0, 0.801);
+  color: rgba(107, 1, 1, 0.801);
 }
 
 #logoutLink::after {
@@ -65,7 +101,7 @@
   display: block;
   margin-top: 2px;
   right: 50%;
-  background: rgba(133, 0, 0, 0.801);
+  background: rgba(107, 1, 1, 0.801);
   transition: width 0.3s ease, right 0.3s ease;
 }
 
