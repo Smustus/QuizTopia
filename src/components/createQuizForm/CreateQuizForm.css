@@ -1,29 +1,38 @@
-.createQuizForm {
-  max-width: 1000px;
+.createQuizFormContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 12px;
 
-  .inputField {
-    width: 100%;
-    margin: 10px;
-  }
+  .createQuizForm {
+    max-width: 1000px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 12px;
+  
+    .inputField {
+      width: 50%;
+      margin: 10px;
+    }
+  
+    input {
+      min-width: 250px;
+    }
+  
+    .createQuizFormBtn {
+      transform: translateY(4px);
+      padding: 24px;
 
-  input {
-    width: 100%;
-    min-width: 250px;
-  }
-
-  .createQuizFormBtn {
-    transform: translateY(4px);
-  }
-
-  .createQuizFormBtn:active {
-    transform: translateY(4px) scale(96%);
+    }
+  
+    .createQuizFormBtn:active {
+      transform: translateY(4px) scale(96%);
+    }
   }
 }
+
 
 table {
   background-color: rgb(253, 205, 177);
@@ -78,14 +87,21 @@ tbody tr {
 }
 
 @media screen and (max-width: 700px) {
-  .createQuizForm {
-    flex-direction: column;
-    margin: 0px 24px;
+  .createQuizFormContainer {
+
+    .createQuizForm {
+      flex-direction: column;
+
+      .createQuizFormBtn {
+        padding: 24px 20px;
+      }
+    }
   }
 
   table {
     display: none;
   }
-
-  
 }
+
+
+

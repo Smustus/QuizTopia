@@ -67,7 +67,7 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
         const addQuestion = await createQuizQuestion(formData);
         console.log(addQuestion);
 
-        const userId = localStorage.setItem('userId', addQuestion.quiz.Attributes.userId);
+        const userId = sessionStorage.setItem('userId', addQuestion.quiz.Attributes.userId);
         console.log(userId);
         
         setFormData({
@@ -83,7 +83,7 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
   }
 
   return (
-    <section>
+    <section className='createQuizFormContainer'>
       <form className='createQuizForm' onSubmit={handleSubmit}>        
         <fieldset className="inputField">
             <legend>Question</legend>

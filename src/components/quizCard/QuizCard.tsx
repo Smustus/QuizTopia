@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import './QuizCard.css'
 import { Quiz } from '../../types/types'
 import { formatStringUpperCase } from '../../utilities/formatter';

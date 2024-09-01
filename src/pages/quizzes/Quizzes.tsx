@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './Quizzes.css';
 import LoginHeader from '../../components/loginHeader/LoginHeader';
 import { deleteQuiz, fetchAllQuizes } from '../../utilities/fetch';
 import { Quiz } from '../../types/types';
 import QuizCard from '../../components/quizCard/QuizCard';
-import cross from '../../assets/close.svg';
 import LeafletMap from '../../components/leafletMap/LeafletMap';
 import Loader from '../../components/loader/Loader';
 import { useSelector } from 'react-redux';
@@ -16,7 +15,7 @@ const Quizzes = () => {
 
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function loadQuizes() {
@@ -77,29 +76,29 @@ const Quizzes = () => {
     <>
       <LoginHeader />
       {loading && <Loader />}
-      {!loading && activeQuiz ? (
-          <main>
+      {!loading && activeQuiz ? !loading && (
+          <main className='quizzesMain'>
             <h2>{formatStringUpperCase(activeQuiz.quizId)}</h2>
             <button className='closeBtn' onClick={handleCloseQuiz}>&#x2715;</button>    
             <LeafletMap activeQuiz={activeQuiz} />
             {
-              (localStorage.getItem('userId') === activeQuiz.userId) ?
+              (sessionStorage.getItem('userId') === activeQuiz.userId) ?
                 <button className='deleteQuizBtn' onClick={() => handleDelete(activeQuiz.quizId)}>Delete quiz</button> : ""
             }
           </main>
         ) :
-        (
+        !loading && (
           <main className='quizzesMain'>
-            {<h2>Choose a quiz</h2>}
+            <h2>Choose a quiz</h2>
             {username && (
               <section>
-                <h3>Your quizzes</h3>
+                <h3 id='quizzesMain_title'>My quizzes</h3>
                 {renderUserQuizList()}
               </section>
               )
             }
             <section>
-              <h3>All quizzes</h3>     
+              <h3 id='quizzesMain_title'>All quizzes</h3>     
               {renderQuizList()}
             </section>
           </main>

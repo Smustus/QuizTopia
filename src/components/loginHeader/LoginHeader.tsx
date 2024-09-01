@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import './LoginHeader.css'
 import { setLoginState, setUsername } from '../../reducers/loggedInReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-const LoginHeader = () => {
+interface LoginHeaderProps {
+  className?: string
+}
+
+const LoginHeader = ({className}: LoginHeaderProps) => {
   const loggedIn = useSelector((state: any) => state.loginState.isLoggedIn);
   const dispatch = useDispatch();  
   const navigate = useNavigate();
@@ -38,7 +42,7 @@ const LoginHeader = () => {
   }
 
   return (
-    <header className='loginHeader'>
+    <header className={`loginHeader ${className}`}>
         {
           loggedIn ? 
             <article>

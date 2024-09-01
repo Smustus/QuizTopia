@@ -41,9 +41,9 @@ export default function LoginForm() {
        
     return (
         <>
-            <LoginHeader />
-            <main>
-            <h2>Logga in</h2>
+            <LoginHeader className="white" />
+            <main className="loginPageMain">
+            <h2 className="loginPageMain_title">Login</h2>
                 <form onSubmit={handleSubmit}>        
                     <fieldset className="inputField">
                         <legend>Username</legend>

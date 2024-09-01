@@ -38,9 +38,9 @@ export default function CreateAccount() {
 
   return (
     <>
-        <LoginHeader />
-        <main>
-            <h2>Create account</h2>
+        <LoginHeader className='white' />
+        <main className="createAccPageMain">
+            <h2 className="createAccPageMain_title">Create account</h2>
             <form onSubmit={handleSubmit}>        
                     <fieldset className="inputField">
                         <legend>Username</legend>

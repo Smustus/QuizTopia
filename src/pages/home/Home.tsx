@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import './Home.css';
 import LoginHeader from '../../components/loginHeader/LoginHeader';
 import { useSelector } from 'react-redux';

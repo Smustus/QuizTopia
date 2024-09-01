@@ -138,7 +138,7 @@ const LeafletMap = ({coordinates, activeQuiz}: LeafletMapProps) => {
                 required
             />
             </fieldset>
-            <button type="submit">Create</button>
+            <button className='createQuizBtn' type="submit">Create</button>
           </form>
           )
           : 

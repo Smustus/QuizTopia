@@ -1,12 +1,13 @@
 #map {
    height: 580px;
    width: 80%;
-   min-width: 350px;
+   min-width: 300px;
    max-width: 1000px;
-   margin: 6px 16px 0px 16px;
+   margin: 6px auto 0px auto;
    font-size: 1rem;
    border-radius: 15px;
-   border: 2px solid rgba(0, 0, 0, 0.7);
+   border: 2px solid rgba(0, 0, 0, 0.6);
+   background-color: white;
 
    a {
       font-size: 1rem;
@@ -22,19 +23,12 @@
    margin: 6px;
    min-width: fit-content;
    
-
-   .inputField {
-      width: 50%;
-      min-width: 200px;
-   }
-
-   button {
-      width: 50%;
+   .createQuizBtn {
+      padding: 12px;
       transform: translateY(4px);
    }
 
    button:active {
-      width: 50%;
       transform: translateY(4px) scale(96%);
    }
 }
