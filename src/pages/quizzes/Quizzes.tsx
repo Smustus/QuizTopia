@@ -66,18 +66,6 @@ const Quizzes = () => {
   );
 
   //Button generated whenever the logged in user = creator of the quiz, gives an option to delete a quiz
-  /* const handleDelete = async (quizId: string) => {
-    try {
-      const deletedQuiz = await deleteQuiz(quizId);
-      console.log(deletedQuiz);
-      setQuizzes((prevQuizzes) => prevQuizzes.filter(quiz => quiz.quizId !== quizId));
-      setActiveQuiz(null);
-
-    } catch (error) {
-      console.error("Failed to delete quiz:", error);
-    }
-  } */
-
     const handleDelete = (quizId: string) => {
       setQuizToDelete(quizId);
       setIsModalOpen(true);
@@ -107,7 +95,7 @@ const Quizzes = () => {
           <main className='quizzesMain'>
             <h2>{formatStringUpperCase(activeQuiz.quizId)}</h2>
             <button className='closeBtn' onClick={handleCloseQuiz}>&#x2715;</button>    
-            <LeafletMap activeQuiz={activeQuiz} />
+            <LeafletMap activeQuiz={activeQuiz} setActiveQuiz={setActiveQuiz} />
             {
               (sessionStorage.getItem('username') === activeQuiz.username) ?
                 <button className='deleteQuizBtn' onClick={() => handleDelete(activeQuiz.quizId)}>Delete quiz</button> : ""

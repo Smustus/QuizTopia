@@ -34,7 +34,7 @@
 }
 
 
-table {
+.createQuizFormTable {
   background-color: rgb(253, 205, 177);
   margin: 0px auto;
   max-width: 80%;
@@ -44,47 +44,48 @@ table {
   background: rgb(88,71,71);
   background: linear-gradient(330deg, rgba(88,71,71,1) 20%, rgba(60,53,53,1) 40%, rgba(54,48,48,1) 60%, rgba(39,36,36,1) 80%);
   color: white;
-}
-
-table td, th {
-  text-align: center;
-  width: 160px;
-  padding: 6px;
-}
-
-table th {
-  text-align: center;
-  width: 160px;
-  padding: 6px;
-}
-
-table td {
-  text-align: center;
-  width: 160px;
-  padding: 6px;
-  background-color: rgb(255, 255, 255);
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.8);
-}
-
-tbody tr:last-child {
-  border-radius: 0px 0px 5px 5px;
-  overflow: hidden;
-}
-
-
-
-thead tr {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-tbody tr {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-radius: 6px;
   
+  td, th {
+    text-align: center;
+    width: 160px;
+    padding: 6px;
+  }
+
+  th {
+    text-align: center;
+    width: 160px;
+    padding: 6px;
+  }
+
+  td {
+    text-align: center;
+    width: 160px;
+    padding: 6px;
+    background-color: rgb(255, 255, 255);
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  tbody tr:last-child {
+    border-radius: 0px 0px 5px 5px;
+    overflow: hidden;
+  }
+
+  thead tr {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  tbody tr {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-radius: 6px;
+  }
 }
+
 
 @media screen and (max-width: 700px) {
   .createQuizFormContainer {
@@ -98,7 +99,7 @@ tbody tr {
     }
   }
 
-  table {
+  .createQuizFormTable {
     display: none;
   }
 }

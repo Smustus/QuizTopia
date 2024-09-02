@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import 'leaflet/dist/leaflet.css';
 import './leafletMap.css'
 import L, { LeafletMouseEvent, Map } from 'leaflet';
@@ -15,9 +15,10 @@ import AnswerQuizForm from '../answerQuizForm/AnswerQuizForm';
 interface LeafletMapProps {
   coordinates?: GeolocationCoordinates | undefined;
   activeQuiz?: Quiz
+  setActiveQuiz?: Dispatch<SetStateAction<Quiz | null>>;
 }
 
-const LeafletMap = ({coordinates, activeQuiz}: LeafletMapProps) => {
+const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) => {
 
   const {questions = []} = activeQuiz || {};
 
@@ -169,7 +170,7 @@ const LeafletMap = ({coordinates, activeQuiz}: LeafletMapProps) => {
         (loading ? <div id="map"><Loader /></div> : <div id="map"></div>)
       }
       {
-        activeQuiz && question && <AnswerQuizForm question={question} markerCoords={markerCoords} activeQuiz={activeQuiz} />
+        activeQuiz && question && <AnswerQuizForm question={question} markerCoords={markerCoords} activeQuiz={activeQuiz} setActiveQuiz={setActiveQuiz} />
       }
       
       {markerCoords && quizCreated && quizName.name.length > 0 &&      

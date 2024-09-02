@@ -33,18 +33,25 @@
   transition: width 0.3s ease, right 0.3s ease;
 }
 
-.loginHeader a:hover::after, 
+.loginHeader a:hover::after {
+  width: 100%;
+  right: 0;
+} 
+
 .loginHeader .active::after {
   width: 100%;
   right: 0;
+  box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6);
 }
 
 .loginHeader a:hover {
   color: rgba(255, 255, 255, 0.6);
+  /* text-shadow: 0px 0px 10px white; */
 }
 
 .loginHeader .active {
   color: rgba(255, 255, 255, 0.6);
+  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
 }
 
 .white {
@@ -74,7 +81,12 @@
     transition: width 0.3s ease, right 0.3s ease;
   }
   
-  a:hover::after, 
+  a:hover::after {
+    width: 100%;
+    right: 0;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  } 
+
   .active::after {
     width: 100%;
     right: 0;

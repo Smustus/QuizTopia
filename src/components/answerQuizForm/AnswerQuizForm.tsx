@@ -1,24 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React, { SetStateAction, useEffect, useState, Dispatch } from 'react'
 import './AnswerQuizForm.css'
-import { MapQuestion, Quiz } from '../../types/types';
-import { useNavigate } from 'react-router-dom';
+import { Quiz } from '../../types/types';
+import correct from '../../assets/correct.svg'
+import inCorrect from '../../assets/incorrect.svg'
 
 interface AnswerQuizFormProps {
   question: string;
   activeQuiz: Quiz;
   markerCoords: { lat: number; lng: number } | null;
+  setActiveQuiz?: Dispatch<SetStateAction<Quiz | null>>;
 }
 
-const AnswerQuizForm = ({question, markerCoords, activeQuiz}: AnswerQuizFormProps) => {
+export type QuizAnswer = {
+  markQuestion: String;
+  answer: String;
+  correct: boolean;
+}
+
+const AnswerQuizForm = ({question, markerCoords, activeQuiz, setActiveQuiz}: AnswerQuizFormProps) => {
 
   const { questions } = activeQuiz;
 
   const [answer, setAnswer] = useState<String>('');
+  const [message, setMessage] = useState<String>('');
+  const [result, setResult] = useState<QuizAnswer[]>([]);
 
   useEffect(() => {
     console.log(answer);
     console.log(questions);
-  }, [answer, questions]);
+    console.log(result);
+  }, [answer, questions, result]);
+
+  useEffect(() => {
+    if(result.length === questions.length) calcResult();
+  }, [result]);
 
   const findQuestion = () => {
     const question = questions.filter((question)  => {
@@ -32,11 +47,59 @@ const AnswerQuizForm = ({question, markerCoords, activeQuiz}: AnswerQuizFormProp
   }
 
   const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
+    e.preventDefault();
+
+    if(result.length < questions.length){
       const askedQuestion = findQuestion()
+      console.log(askedQuestion);
+      const extractedQuestion = askedQuestion[0].question;
+      console.log(extractedQuestion);
+
       if(askedQuestion[0].answer.toLowerCase() === answer.toLowerCase()){
+        setMessage('Correct!');
         console.log('You are correct');
+        setResult((prevAnswers) => [
+          ...prevAnswers, {
+            markQuestion: extractedQuestion,
+            answer: answer,
+            correct: true,
+          }
+        ]);
+      } else {
+        setMessage('Try again!');
+        setResult((prevAnswers) => [
+          ...prevAnswers, {
+            markQuestion: extractedQuestion,
+            answer: answer,
+            correct: false,
+          }
+        ]);
       }
+    }
+  }
+
+  const calcResult = () => {
+    const corrects = result.reduce((acc, obj) => {
+      return acc + (obj.correct ? 1 : 0)
+    }, 0);
+    console.log(corrects);
+    
+    const offCount = questions.length - corrects;
+
+    if(corrects === questions.length){
+      setMessage('Good job, you had all correct answers!');
+      setTimeout(() => {
+        if(setActiveQuiz) setActiveQuiz(null);
+      }, 4000);
+      
+      
+    }
+    if(corrects !== questions.length){
+      setMessage(`Nice try! You where ${offCount} off`)
+      setTimeout(() => {
+        if(setActiveQuiz) setActiveQuiz(null);
+      }, 4000);
+    }
   }
 
   return (
@@ -60,6 +123,29 @@ const AnswerQuizForm = ({question, markerCoords, activeQuiz}: AnswerQuizFormProp
     
       <button className='answerQuizFormBtn' type="submit">Submit</button>
       </form>
+
+      <h3 className='answerQuizMessage'>{ message }</h3>
+
+      <table className='answerQuizTable'>
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Answer</th>
+            <th>{`${result.length}/${questions.length}`}</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          {result.map((question, index) => (
+            <tr key={index}>
+              <td>{ question.markQuestion }</td>
+              <td>{ question.answer }</td>
+              <td>{ question.correct ? <img className='correctImage' src={correct} alt="correct" /> : <img className='inCorrectImage' src={inCorrect} alt="incorrect" /> }</td>
+            </tr>
+          ))}
+          
+        </tbody>
+      </table>
     </section>
     
   )

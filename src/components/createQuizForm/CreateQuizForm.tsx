@@ -110,7 +110,7 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
         <button className='createQuizFormBtn' type="submit">Add</button>
       </form>
 
-      <table>
+      <table className='createQuizFormTable'>
         <thead>
           <tr>
             <th>Question</th>
