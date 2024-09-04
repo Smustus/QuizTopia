@@ -7,10 +7,11 @@ import { createQuiz, getPosition } from '../../utilities/fetch';
 import CreateQuizForm from '../createQuizForm/CreateQuizForm';
 import Loader from '../loader/Loader';
 import { formatStringUpperCase } from '../../utilities/formatter';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setLoginState, setUsername } from '../../reducers/loggedInReducer';
 import AnswerQuizForm from '../answerQuizForm/AnswerQuizForm';
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setLoginState, setUsername } from '../../reducers/loggedInReducer';
+
 
 interface LeafletMapProps {
   coordinates?: GeolocationCoordinates | undefined;
@@ -31,12 +32,11 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
   const [question, setQuestion] = useState<string | null>(null);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(markerCoords); 
-    console.log(question);
-           
+    console.log(question);        
   }, [markerCoords, question]);
 
   useEffect(() => {
@@ -130,7 +130,7 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
           dispatch(setUsername(""));
           navigate("/login");
         }
-        if(quiz.length > 0){
+        if(quiz){
           setQuizCreated(true);
         }
       }
@@ -169,6 +169,7 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
         : 
         (loading ? <div id="map"><Loader /></div> : <div id="map"></div>)
       }
+
       {
         activeQuiz && question && <AnswerQuizForm question={question} markerCoords={markerCoords} activeQuiz={activeQuiz} setActiveQuiz={setActiveQuiz} />
       }

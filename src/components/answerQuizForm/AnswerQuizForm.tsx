@@ -1,6 +1,6 @@
 import React, { SetStateAction, useEffect, useState, Dispatch } from 'react'
 import './AnswerQuizForm.css'
-import { Quiz } from '../../types/types';
+import { Quiz, QuizAnswer } from '../../types/types';
 import correct from '../../assets/correct.svg'
 import inCorrect from '../../assets/incorrect.svg'
 
@@ -11,18 +11,12 @@ interface AnswerQuizFormProps {
   setActiveQuiz?: Dispatch<SetStateAction<Quiz | null>>;
 }
 
-export type QuizAnswer = {
-  markQuestion: String;
-  answer: String;
-  correct: boolean;
-}
-
 const AnswerQuizForm = ({question, markerCoords, activeQuiz, setActiveQuiz}: AnswerQuizFormProps) => {
 
   const { questions } = activeQuiz;
 
-  const [answer, setAnswer] = useState<String>('');
-  const [message, setMessage] = useState<String>('');
+  const [answer, setAnswer] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
   const [result, setResult] = useState<QuizAnswer[]>([]);
 
   useEffect(() => {
@@ -54,27 +48,40 @@ const AnswerQuizForm = ({question, markerCoords, activeQuiz, setActiveQuiz}: Ans
       console.log(askedQuestion);
       const extractedQuestion = askedQuestion[0].question;
       console.log(extractedQuestion);
+      
+      let questionAnswered = false;
 
-      if(askedQuestion[0].answer.toLowerCase() === answer.toLowerCase()){
-        setMessage('Correct!');
-        console.log('You are correct');
-        setResult((prevAnswers) => [
-          ...prevAnswers, {
-            markQuestion: extractedQuestion,
-            answer: answer,
-            correct: true,
+      if(result.length > 0){
+        result.forEach((quest) => {
+          if(quest.markQuestion === extractedQuestion){
+            setMessage('You already answered this question');
+            questionAnswered = true;
           }
-        ]);
-      } else {
-        setMessage('Try again!');
-        setResult((prevAnswers) => [
-          ...prevAnswers, {
-            markQuestion: extractedQuestion,
-            answer: answer,
-            correct: false,
-          }
-        ]);
+        });
+      } 
+      if(!questionAnswered){
+        if(askedQuestion[0].answer.toLowerCase() === answer.toLowerCase()){
+          setMessage('Correct!');
+          console.log('You are correct');
+          setResult((prevAnswers) => [
+            ...prevAnswers, {
+              markQuestion: extractedQuestion,
+              answer: answer,
+              correct: true,
+            }
+          ]);
+        } else {
+          setMessage('Try again!');
+          setResult((prevAnswers) => [
+            ...prevAnswers, {
+              markQuestion: extractedQuestion,
+              answer: answer,
+              correct: false,
+            }
+          ]);
+        }
       }
+    
     }
   }
 
@@ -134,8 +141,7 @@ const AnswerQuizForm = ({question, markerCoords, activeQuiz, setActiveQuiz}: Ans
             <th>{`${result.length}/${questions.length}`}</th>
           </tr>
         </thead>
-        <tbody>
-          
+        <tbody>      
           {result.map((question, index) => (
             <tr key={index}>
               <td>{ question.markQuestion }</td>
@@ -143,7 +149,6 @@ const AnswerQuizForm = ({question, markerCoords, activeQuiz, setActiveQuiz}: Ans
               <td>{ question.correct ? <img className='correctImage' src={correct} alt="correct" /> : <img className='inCorrectImage' src={inCorrect} alt="incorrect" /> }</td>
             </tr>
           ))}
-          
         </tbody>
       </table>
     </section>

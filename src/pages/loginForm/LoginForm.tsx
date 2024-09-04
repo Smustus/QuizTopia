@@ -6,11 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoginState, setUsername } from "../../reducers/loggedInReducer";
 import LoginHeader from "../../components/loginHeader/LoginHeader";
-
-type User = {
-    username: string;
-    password: string;
-}
+import { User } from "../../types/types";
 
 export default function LoginForm() {
     const [formData, setFormData] = useState<User>({ username: '', password: '' });

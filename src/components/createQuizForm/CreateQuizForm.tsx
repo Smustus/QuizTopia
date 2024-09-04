@@ -3,7 +3,7 @@ import './CreateQuizForm.css';
 import { MapQuestion, QuizQuestion } from '../../types/types';
 import { createQuizQuestion } from '../../utilities/fetch';
 
-type CreateQuizFormProps = {
+interface CreateQuizFormProps {
   name: string;
   markerCoords: {
     lat: number;
@@ -67,9 +67,6 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
 
         const addQuestion = await createQuizQuestion(formData);
         console.log(addQuestion);
-
-        const userId = sessionStorage.setItem('userId', addQuestion.quiz.Attributes.userId);
-        console.log(userId);
         
         setFormData({
           name,
@@ -85,6 +82,7 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
 
   return (
     <section className='createQuizFormContainer'>
+      
       <form className='createQuizForm' onSubmit={handleSubmit}>        
         <fieldset className="inputField">
             <legend>Question</legend>
@@ -131,7 +129,6 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
         </tbody>
       </table>
       
-
     </section>
   )
 }

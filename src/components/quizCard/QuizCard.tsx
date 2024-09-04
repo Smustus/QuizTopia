@@ -8,9 +8,7 @@ type QuizCardProps = {
   setActiveQuiz: Dispatch<SetStateAction<Quiz | null>>
 }
 
-const QuizCard = ({quiz, setActiveQuiz}: QuizCardProps) => {
-  console.log(quiz);
-  
+const QuizCard = ({quiz, setActiveQuiz}: QuizCardProps) => {  
 
   return (
     <article className='quizCard' onClick={() => setActiveQuiz(quiz)}>

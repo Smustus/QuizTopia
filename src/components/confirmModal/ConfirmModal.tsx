@@ -1,7 +1,7 @@
 import React from 'react';
 import './ConfirmModal.css'
 
-type ConfirmDeleteModalProps = {
+interface ConfirmDeleteModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;

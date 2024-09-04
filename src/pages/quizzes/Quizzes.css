@@ -8,6 +8,48 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
+.createNewQuizCard {
+  background: linear-gradient(180deg, #d8d2d2, #bebebe, #6d6d6d);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+
+  .createNewQuizCard_addIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 6px 12px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    box-shadow: -0px 1px 1px rgba(0, 0, 0, 0.2);
+
+    img {
+      transform: scale(25%);
+    }
+  }
+}
+
+.createNewQuizCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.createNewQuizCard:active {
+  transform: translateY(-5px) scale(98%);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
 .closeBtn {
   font-size: clamp(1.2rem, 1rem + 1vw, 1.6rem);
   text-shadow: 0px 0px 4px white;

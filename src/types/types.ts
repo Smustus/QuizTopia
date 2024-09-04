@@ -14,3 +14,14 @@ export type MapQuestion = {
 export type QuizQuestion = MapQuestion & {
   name: string,
 }
+
+export type QuizAnswer = {
+  markQuestion: string;
+  answer: string;
+  correct: boolean;
+}
+
+export type User = {
+  username: string;
+  password: string;
+}

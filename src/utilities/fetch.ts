@@ -1,4 +1,4 @@
-import { QuizQuestion } from "../types/types";
+import { QuizQuestion, User } from "../types/types";
 
 const BASE_URL = 'https://fk7zu3f4gj.execute-api.eu-north-1.amazonaws.com';
 
@@ -16,7 +16,7 @@ export function getPosition(callback: (coords: GeolocationCoordinates) => void) 
     }
   }
 
-export async function createAcc(userData: any) {
+export async function createAcc(userData: User) {
   try {
     const response = await fetch(`${BASE_URL}/auth/signup`, {
         method: 'POST',
@@ -38,7 +38,7 @@ export async function createAcc(userData: any) {
     }
 }
 
-export async function loginAcc(userData: any){
+export async function loginAcc(userData: User){
     try {
         const response = await fetch(`${BASE_URL}/auth/login`, {
             method: 'POST',
@@ -96,7 +96,7 @@ export async function createQuizQuestion(quizQuestion: QuizQuestion){
             body: JSON.stringify(quizQuestion)
         });
         if (!response.ok) {
-            throw new Error('Could not create quiz')
+            throw new Error('Could not create quiz question')
         }
         const data = await response.json();
         return data;
@@ -114,6 +114,9 @@ export async function fetchAllQuizes() {
                 'Content-Type': 'application/json',
             }
         });
+        if (!response.ok) {
+            throw new Error('Could not fetch quizzes')
+        }
         const data = await response.json();
         return data;
 
@@ -133,6 +136,9 @@ export async function fetchQuiz(userId: string, quizId: string) {
                     'Content-Type': 'application/json',
                 }
             });
+            if (!response.ok) {
+                throw new Error('Could not fetch the quiz')
+            }
             const data = await response.json();
             return data;
 
@@ -152,8 +158,10 @@ export async function deleteQuiz(quizId: string) {
             'Authorization': `${sessionStorage.getItem('token')}`
             }
         });
+        if (!response.ok) {
+            throw new Error('Could not delete the quiz')
+        }
         const data = await response.json();
-        console.log('Token');
         return data;
 
         } catch (error) {

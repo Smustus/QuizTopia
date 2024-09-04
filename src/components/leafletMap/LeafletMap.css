@@ -1,5 +1,6 @@
 #map {
    height: 580px;
+   min-height: 500px;
    width: 80%;
    min-width: 300px;
    max-width: 1000px;

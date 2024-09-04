@@ -3,11 +3,7 @@ import './CreateAccount.css';
 import { createAcc } from "../../utilities/fetch";
 import { useNavigate } from "react-router-dom";
 import LoginHeader from "../../components/loginHeader/LoginHeader";
-
-export type User = {
-    username: string;
-    password: string;
-};
+import { User } from "../../types/types";
 
 export default function CreateAccount() {
     const [formData, setFormData] = useState<User>({ username: '', password: '' });

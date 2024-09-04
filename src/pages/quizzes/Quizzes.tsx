@@ -9,6 +9,8 @@ import Loader from '../../components/loader/Loader';
 import { useSelector } from 'react-redux';
 import { formatStringUpperCase } from '../../utilities/formatter';
 import { ConfirmModal } from '../../components/confirmModal/ConfirmModal';
+import { useNavigate } from 'react-router-dom';
+import plusIcon from '../../assets/plus.svg';
 
 const Quizzes = () => {
 
@@ -17,8 +19,10 @@ const Quizzes = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [quizToDelete, setQuizToDelete] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   //On component load -> fetch quizzes and update the quiz-state with respective values
   useEffect(() => {
@@ -49,20 +53,16 @@ const Quizzes = () => {
     });
     
     return (
-      <section className='quizList'>
-        {userQuizzes.map((quiz: Quiz, index) => (
-          <QuizCard key={index} quiz={quiz} setActiveQuiz={setActiveQuiz} />
-        ))}
-      </section>
+      userQuizzes.map((quiz: Quiz, index) => (
+        <QuizCard key={index} quiz={quiz} setActiveQuiz={setActiveQuiz} />
+      ))
     )
   }
 
   const renderQuizList = () => (
-    <section className='quizList'>
-      {quizzes.map((quiz: Quiz, index) => (
-        <QuizCard key={index} quiz={quiz} setActiveQuiz={setActiveQuiz} />
-      ))}
-    </section>
+    quizzes.map((quiz: Quiz, index) => (
+      <QuizCard key={index} quiz={quiz} setActiveQuiz={setActiveQuiz} />
+    ))
   );
 
   //Button generated whenever the logged in user = creator of the quiz, gives an option to delete a quiz
@@ -95,11 +95,12 @@ const Quizzes = () => {
           <main className='quizzesMain'>
             <h2>{formatStringUpperCase(activeQuiz.quizId)}</h2>
             <button className='closeBtn' onClick={handleCloseQuiz}>&#x2715;</button>    
-            <LeafletMap activeQuiz={activeQuiz} setActiveQuiz={setActiveQuiz} />
             {
               (sessionStorage.getItem('username') === activeQuiz.username) ?
                 <button className='deleteQuizBtn' onClick={() => handleDelete(activeQuiz.quizId)}>Delete quiz</button> : ""
             }
+            <LeafletMap activeQuiz={activeQuiz} setActiveQuiz={setActiveQuiz} />
+            
              <ConfirmModal 
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 
@@ -113,13 +114,23 @@ const Quizzes = () => {
             {username && (
               <section>
                 <h3 id='quizzesMain_title'>My quizzes</h3>
-                {renderUserQuizList()}
+                <section className='quizList'>
+                  {renderUserQuizList()}
+                  <article className='createNewQuizCard' onClick={() => navigate("/createquiz")}>
+                    <h3>Create Quiz</h3>
+                    <div className='createNewQuizCard_addIcon'>
+                      <img src={ plusIcon } alt="add"  />
+                    </div>
+                  </article>
+                </section>
               </section>
               )
             }
             <section>
-              <h3 id='quizzesMain_title'>All quizzes</h3>     
-              {renderQuizList()}
+              <h3 id='quizzesMain_title'>All quizzes</h3>
+              <section className='quizList'>
+                {renderQuizList()}
+              </section>
             </section>
           </main>
         )
