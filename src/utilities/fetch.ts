@@ -73,12 +73,9 @@ export async function createQuiz(quizName: {name: string}){
             },
             body: JSON.stringify(quizName)
         });
-        if (!response.ok) {
-            throw new Error('Could not create quiz')
-        }
+
         const data = await response.json();
-        console.log(data);
-        return data.quizId;
+        return data;
         
     } catch (error: any) {
         console.error(error);

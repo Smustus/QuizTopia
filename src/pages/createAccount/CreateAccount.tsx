@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import './CreateAccount.css';
 import { createAcc } from "../../utilities/fetch";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginHeader from "../../components/loginHeader/LoginHeader";
 import { User } from "../../types/types";
 
@@ -58,7 +58,7 @@ export default function CreateAccount() {
                             required
                         />
                     </fieldset>
-                  
+                    
                     <button type="submit">Create</button>
                 </form>
         </main>

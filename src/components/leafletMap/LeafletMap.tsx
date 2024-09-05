@@ -30,14 +30,20 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
   const [quizName, setQuizname] = useState<{name: string}>({name: ''});
   const [quizCreated, setQuizCreated] = useState<boolean>(false);
   const [question, setQuestion] = useState<string | null>(null);
+  const [markers, setMarkers] = useState<L.Marker[]>([]);
+  const [markerTimers, setMarkerTimers] = useState<ReturnType<typeof setTimeout>[]>([]);
+  const [mapQuestions, setMapQuestions] = useState<MapQuestion[]>([]);
+  const [message, setMessage] = useState<string>('');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(markerCoords); 
-    console.log(question);        
-  }, [markerCoords, question]);
+    console.log(question);
+    console.log(mapQuestions)
+        
+  }, [markerCoords, question, mapQuestions]);
 
   useEffect(() => {
     if(!coordinates || !position?.latitude){
@@ -76,6 +82,26 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
     }
   }, [position]);
 
+  //Function to remove markers after 20s (reduce cluttering) unless the user adds a question for respective coordinates
+  useEffect(() => {
+    if (map && quizCreated && markers.length > 0) {
+      markers.forEach((marker) => {
+        const timer = setTimeout(() => {
+            map.removeLayer(marker); 
+            setMarkers((prevMarkers) => prevMarkers.filter((m) => m !== marker));   
+        }, 20000);
+        setMarkerTimers((prevTimers) => [...prevTimers, timer]);
+      });
+      mapQuestions.map((question: MapQuestion) => {
+        const marker = L.marker([question.location.latitude, question.location.longitude]).addTo(map);
+        marker.bindPopup(question.question);
+      });
+    }
+    return () => {
+      markerTimers.forEach((timer) => clearTimeout(timer));
+    };
+  }, [markers, mapQuestions, map, quizCreated]);
+
   //When user wants to create a quiz. On map, quiz creation and question state update, give the user the option to generate markers and add questions to their quiz (questions are only available whenever the user want to do a quiz, not create one)
   useEffect(() => {
     if (map && quizCreated && questions.length === 0) {
@@ -84,6 +110,7 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
           const newMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
           newMarker.bindPopup('Enter your question for the position').openPopup();
           setMarkerCoords(e.latlng);
+          setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
         }
       }
   
@@ -100,7 +127,7 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
     if(map && questions.length > 0){
       questions.map((question: MapQuestion) => {
         const marker = L.marker([question.location.latitude, question.location.longitude]).addTo(map);
-        marker.bindPopup(question.question).openPopup();
+        marker.bindPopup(question.question);
 
         marker.on('click', (e) => {
           console.log(e.target._latlng);
@@ -122,15 +149,24 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
       if(quizName.name.length > 0){
         const quiz = await createQuiz(quizName);
         console.log(quiz);
-        if(!quiz){
+        if(quiz.message === "Invalid token"){
           sessionStorage.setItem('token', '');
           sessionStorage.setItem('username', '');
           sessionStorage.setItem('userId', '');
           dispatch(setLoginState(false));
           dispatch(setUsername(""));
           navigate("/login");
+          return
         }
-        if(quiz){
+        if(!quiz.success) {     
+          setMessage('Try a different name');
+          return
+        }
+        if(quiz.quizId){
+          setMessage('Quiz successfully created');
+          setTimeout(() => {
+            setMessage('');
+          }, 2000);
           setQuizCreated(true);
         }
       }
@@ -145,22 +181,29 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
       {
         activeQuiz ? '' : (
         !activeQuiz && !quizCreated ? (
-          <form className='leafletmap_quizNameForm' onSubmit={handleSubmit}>
-            <fieldset className="inputField">
-            <legend>Name</legend>
-            <input
-                type="text"
-                name="quizName"
-                value={quizName.name}
-                onChange={handleInputChange}
-                required
-            />
-            </fieldset>
-            <button className='createQuizBtn' type="submit">Create</button>
-          </form>
+          <div>
+            <p className="message">{message}</p>
+            <form className='leafletmap_quizNameForm' onSubmit={handleSubmit}>
+              <fieldset className="inputField">
+              <legend>Name</legend>
+              <input
+                  type="text"
+                  name="quizName"
+                  value={quizName.name}
+                  onChange={handleInputChange}
+                  required
+              />
+              </fieldset>
+              <button className='createQuizBtn' type="submit">Create</button>
+            </form>
+          </div>
           )
           : 
-          <h4>{`Quiz: ${formatStringUpperCase(quizName.name)}`}</h4>
+          ( <div>
+              <p className="message">{message}</p>
+              <h4>{`Quiz: ${formatStringUpperCase(quizName.name)}`}</h4>
+            </div>
+          )
         )
       }
 
@@ -175,10 +218,12 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
       }
       
       {markerCoords && quizCreated && quizName.name.length > 0 &&      
-          <CreateQuizForm name={quizName.name} markerCoords={markerCoords} />
+          <CreateQuizForm name={quizName.name} markerCoords={markerCoords} mapQuestions={mapQuestions} setMapQuestions={setMapQuestions} />
       }
     </>
   )
 }
 
 export default LeafletMap
+
+

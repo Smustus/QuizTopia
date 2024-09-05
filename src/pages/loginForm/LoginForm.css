@@ -18,11 +18,67 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 200px;
+    max-width: 250px;
 
     button {
       margin: 5px;
       padding: 16px;
     }
+
+    .loginPage_createAccLink {
+      padding: 6px;
+    }
+
+    .loginPage_createAccLink, .loginPage_createAccLink a {
+      font-size: clamp(0.7rem, 0.2rem + 1vw, 0.9rem);
+      font-size: clamp(0.7rem, 0.2rem + 1vw, 0.9rem);
+    }
+
+    .loginPage_createAccLink a {
+      position: relative;
+      display: inline-block;
+      padding: 2px;
+      margin: 0 24px 4px 24px;
+      text-decoration: none;
+      color: rgb(20, 18, 160);
+      transition: color 0.3s;
+    }
+
+    .loginPage_createAccLink a:hover {
+      color: rgb(20, 18, 160);
+    }
+
+    .loginPage_createAccLink a:visited, .loginPage_createAccLink a:visited:hover {
+      color: rgb(150, 23, 23);
+    }
+
+    .loginPage_createAccLink a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      display: block;
+      margin-top: 2px;
+      right: 50%;
+      background: rgb(150, 23, 23);
+      transition: width 0.3s ease, right 0.3s ease;
+    }
+
+    .loginPage_createAccLink a:visited:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      display: block;
+      margin-top: 2px;
+      right: 50%;
+      background: rgb(150, 23, 23);
+      
+    }
+    
+    .loginPage_createAccLink a:hover::after {
+      width: 100%;
+      right: 0;
+    } 
   }
 }

@@ -32,5 +32,11 @@
 
    button:active {
       transform: translateY(4px) scale(96%);
-   }
+   } 
+}
+
+.message {
+   color: rgb(168, 0, 0);
+   padding: 0;
+   margin: 4px 0 0 0;
 }

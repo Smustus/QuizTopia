@@ -2,7 +2,7 @@ import { useState } from "react";
 import './LoginForm.css';
 import React from "react";
 import { loginAcc } from "../../utilities/fetch";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoginState, setUsername } from "../../reducers/loggedInReducer";
 import LoginHeader from "../../components/loginHeader/LoginHeader";
@@ -63,7 +63,7 @@ export default function LoginForm() {
                             required
                         />
                     </fieldset>
-                  
+                    <p className="loginPage_createAccLink">Missing&nbsp;an&nbsp;account?&nbsp;<Link to="/create">Create&nbsp;one&nbsp;here!</Link></p>
                     <button type="submit">Login</button>
                 </form>
             </main>

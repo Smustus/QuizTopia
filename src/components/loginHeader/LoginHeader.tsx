@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import './LoginHeader.css'
 import { setLoginState, setUsername } from '../../reducers/loggedInReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 interface LoginHeaderProps {
   className?: string
@@ -62,12 +62,12 @@ const LoginHeader = ({className}: LoginHeaderProps) => {
                 Create quiz
               </NavLink>
 
-              <a id='logoutLink' href='/login' onClick={(e) => {
+              <Link id='logoutLink' to='/login' onClick={(e) => {
                   e.preventDefault();
                   handleLogout();
                 }}>
                 Logout
-              </a>
+              </Link>
             </article> 
             :
             <article>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import './CreateQuizForm.css';
 import { MapQuestion, QuizQuestion } from '../../types/types';
 import { createQuizQuestion } from '../../utilities/fetch';
@@ -9,15 +9,13 @@ interface CreateQuizFormProps {
     lat: number;
     lng: number;
   };
+  setMapQuestions: Dispatch<SetStateAction<MapQuestion[]>>;
+  mapQuestions: MapQuestion[];
 }
 
-const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
+const CreateQuizForm = ({name, markerCoords, setMapQuestions, mapQuestions}: CreateQuizFormProps) => {
 
   const {lng, lat} = markerCoords;
-  
-  useEffect(() => {
-    console.log(markerCoords);
-  },  [markerCoords]);
 
   const [formData, setFormData] = useState<QuizQuestion>({
     name,
@@ -26,11 +24,9 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
     location: {longitude: 0, latitude: 0}
   });
 
-  const [questions, setQuestions] = useState<MapQuestion[]>([]);
-
   useEffect(() => {
-    console.log(questions);
-  }, [questions]);
+    console.log(mapQuestions);
+  }, [mapQuestions]);
 
   //Updates the formData whenever the user changes longitute and latitute (puts a new mark)
   useEffect(() => {
@@ -63,7 +59,7 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
             longitude: lng,
           }
         }
-        setQuestions((prevData) => [...prevData, createdQuestion]);
+        setMapQuestions((prevData) => [...prevData, createdQuestion]);
 
         const addQuestion = await createQuizQuestion(formData);
         console.log(addQuestion);
@@ -118,7 +114,7 @@ const CreateQuizForm = ({name, markerCoords}: CreateQuizFormProps) => {
           </tr>
         </thead>
         <tbody>
-          {questions.map((question, index) => (
+          {mapQuestions.map((question, index) => (
             <tr key={index}>
               <td>{question.question}</td>
               <td>{question.answer}</td>
