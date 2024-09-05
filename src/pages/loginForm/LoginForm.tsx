@@ -10,6 +10,7 @@ import { User } from "../../types/types";
 
 export default function LoginForm() {
     const [formData, setFormData] = useState<User>({ username: '', password: '' });
+    const [message, setMessage] = useState<string>('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -27,10 +28,14 @@ export default function LoginForm() {
         e.preventDefault();
         try {
             const loginToken = await loginAcc(formData);
-            if(!loginToken.success) return
+            if(!loginToken.success) {
+                setMessage(loginToken.message);
+                return
+            } 
             dispatch(setLoginState(true))
             dispatch(setUsername(formData.username))
             navigate("/");
+            
         
          } catch (error) {
             console.error(error);
@@ -63,7 +68,8 @@ export default function LoginForm() {
                             required
                         />
                     </fieldset>
-                    <p className="loginPage_createAccLink">Missing&nbsp;an&nbsp;account?&nbsp;<Link to="/create">Create&nbsp;one&nbsp;here!</Link></p>
+                    <p className="message">{message}</p>
+                    <p className="loginPage_createAccLink">Missing&nbsp;an&nbsp;account?<Link to="/create">Create&nbsp;one&nbsp;here!</Link></p>
                     <button type="submit">Login</button>
                 </form>
             </main>

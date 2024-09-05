@@ -81,4 +81,11 @@
       right: 0;
     } 
   }
+  .message {
+    color: rgb(168, 0, 0);
+    padding: 0;
+    margin: 4px 0 0 0;
+    font-size: clamp(0.8rem, 0.4rem + 1vw, 1rem);
+  }
 }
+
