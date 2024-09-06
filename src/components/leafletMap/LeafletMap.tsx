@@ -125,7 +125,7 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
   //When user want to do a quiz. On map and question state update, generate markers with respective questions (questions are only available whenever the user want to do a quiz, not create one)
   useEffect(() => {
     if(map && questions.length > 0){
-      questions.map((question: MapQuestion) => {
+      questions.forEach((question: MapQuestion) => {
         const marker = L.marker([question.location.latitude, question.location.longitude]).addTo(map);
         marker.bindPopup(question.question);
 
@@ -149,6 +149,7 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
       if(quizName.name.length > 0){
         const quiz = await createQuiz(quizName);
         console.log(quiz);
+
         if(quiz.message === "Invalid token"){
           sessionStorage.setItem('token', '');
           sessionStorage.setItem('username', '');
@@ -161,13 +162,14 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
         if(!quiz.success) {     
           setMessage('Try a different name');
           return
-        }
-        if(quiz.quizId){
+        } 
+        if(quiz.success && quiz.quizId.length > 0){
           setMessage('Quiz successfully created');
           setTimeout(() => {
             setMessage('');
           }, 2000);
           setQuizCreated(true);
+          return
         }
       }
         
@@ -175,6 +177,13 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
         console.error(error);
     }
   }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        handleSubmit(e as React.FormEvent);
+    }
+}
   
   return (
     <>
@@ -183,7 +192,7 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
         !activeQuiz && !quizCreated ? (
           <div>
             <p className="message">{message}</p>
-            <form className='leafletmap_quizNameForm' onSubmit={handleSubmit}>
+            <form className='leafletmap_quizNameForm' onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
               <fieldset className="inputField">
               <legend>Name</legend>
               <input

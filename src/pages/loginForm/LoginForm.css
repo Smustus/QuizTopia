@@ -31,7 +31,6 @@
 
     .loginPage_createAccLink, .loginPage_createAccLink a {
       font-size: clamp(0.7rem, 0.2rem + 1vw, 0.9rem);
-      font-size: clamp(0.7rem, 0.2rem + 1vw, 0.9rem);
     }
 
     .loginPage_createAccLink a {

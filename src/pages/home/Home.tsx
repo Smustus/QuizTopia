@@ -11,7 +11,7 @@ const Home = () => {
     <>
       <LoginHeader />
       <main className='homeMain'>
-        <h1>{`Welcome to QuizTopia${username ? ` ${formatStringUpperCase(username)}` : ""}!`}</h1>
+        <h1>Welcome to QuizTopia{`${username ? ` ${formatStringUpperCase(username)}` : ""}!`}</h1>
         
         <section>
           

@@ -35,10 +35,16 @@ export default function LoginForm() {
             dispatch(setLoginState(true))
             dispatch(setUsername(formData.username))
             navigate("/");
-            
         
          } catch (error) {
             console.error(error);
+        }
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            handleSubmit(e as React.FormEvent);
         }
     }
        
@@ -47,7 +53,7 @@ export default function LoginForm() {
             <LoginHeader className="white" />
             <main className="loginPageMain">
             <h2 className="loginPageMain_title">Login</h2>
-                <form onSubmit={handleSubmit}>        
+                <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>        
                     <fieldset className="inputField">
                         <legend>Username</legend>
                         <input

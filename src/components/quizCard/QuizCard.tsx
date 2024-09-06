@@ -10,6 +10,7 @@ type QuizCardProps = {
 
 const QuizCard = ({quiz, setActiveQuiz}: QuizCardProps) => {  
 
+
   return (
     <article className='quizCard' onClick={() => setActiveQuiz(quiz)}>
       <div className='quizCardHeader'>
@@ -18,7 +19,6 @@ const QuizCard = ({quiz, setActiveQuiz}: QuizCardProps) => {
       </div>
       <div className='quizCardBody'>
         <p>{`Created by: ${formatStringUpperCase(String(quiz.username))}`}</p>
-        {/* <p>{`Created by: ${quiz.username}`}</p> */}
       </div>
   </article>
   )

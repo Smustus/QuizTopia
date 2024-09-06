@@ -32,12 +32,19 @@ export default function CreateAccount() {
         }
     }
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            handleSubmit(e as React.FormEvent);
+        }
+    }
+
   return (
     <>
         <LoginHeader className='white' />
         <main className="createAccPageMain">
             <h2 className="createAccPageMain_title">Create account</h2>
-            <form onSubmit={handleSubmit}>        
+            <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>        
                     <fieldset className="inputField">
                         <legend>Username</legend>
                         <input
