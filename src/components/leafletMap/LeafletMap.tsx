@@ -30,8 +30,6 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
   const [quizName, setQuizname] = useState<{name: string}>({name: ''});
   const [quizCreated, setQuizCreated] = useState<boolean>(false);
   const [question, setQuestion] = useState<string | null>(null);
-  const [markers, setMarkers] = useState<L.Marker[]>([]);
-  const [markerTimers, setMarkerTimers] = useState<ReturnType<typeof setTimeout>[]>([]);
   const [mapQuestions, setMapQuestions] = useState<MapQuestion[]>([]);
   const [message, setMessage] = useState<string>('');
 
@@ -42,6 +40,7 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
     console.log(markerCoords); 
     console.log(question);
     console.log(mapQuestions)
+    
         
   }, [markerCoords, question, mapQuestions]);
 
@@ -73,7 +72,6 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
         L.marker([position?.latitude, position?.longitude]).addTo(createMap).bindPopup('You are here!').openPopup();
         
         setMap(createMap);
-
         
         tileLayer.on('load', () => {
           setLoading(false);
@@ -82,37 +80,27 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
     }
   }, [position]);
 
-  //Function to remove markers after 20s (reduce cluttering) unless the user adds a question for respective coordinates
+  //When a user wants to create a quiz! On map, quiz creation and question state update, give the user the option to generate a marker and add a question to their quiz (questions variable are only available whenever the user want to do a quiz, not create one). Then generate all applied markers based on the added questions to the quiz
   useEffect(() => {
-    if (map && quizCreated && markers.length > 0) {
-      markers.forEach((marker) => {
-        const timer = setTimeout(() => {
-            map.removeLayer(marker); 
-            setMarkers((prevMarkers) => prevMarkers.filter((m) => m !== marker));   
-        }, 20000);
-        setMarkerTimers((prevTimers) => [...prevTimers, timer]);
-      });
+    if (map && quizCreated && questions.length === 0) {
+      let activeMarker: L.Marker | null = null;
+
+      function onMapClick(e: LeafletMouseEvent) {
+        if (map) {
+          if (activeMarker) {
+            map.removeLayer(activeMarker);
+          }
+          const newMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+          newMarker.bindPopup('Enter your question for the position').openPopup();
+          activeMarker = newMarker;
+
+          setMarkerCoords(e.latlng);
+        }
+      }
       mapQuestions.map((question: MapQuestion) => {
         const marker = L.marker([question.location.latitude, question.location.longitude]).addTo(map);
         marker.bindPopup(question.question);
       });
-    }
-    return () => {
-      markerTimers.forEach((timer) => clearTimeout(timer));
-    };
-  }, [markers, mapQuestions, map, quizCreated]);
-
-  //When user wants to create a quiz. On map, quiz creation and question state update, give the user the option to generate markers and add questions to their quiz (questions are only available whenever the user want to do a quiz, not create one)
-  useEffect(() => {
-    if (map && quizCreated && questions.length === 0) {
-      function onMapClick(e: LeafletMouseEvent) {
-        if (map) {
-          const newMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-          newMarker.bindPopup('Enter your question for the position').openPopup();
-          setMarkerCoords(e.latlng);
-          setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
-        }
-      }
   
       map.on('click', onMapClick);
   
@@ -120,7 +108,7 @@ const LeafletMap = ({coordinates, activeQuiz, setActiveQuiz}: LeafletMapProps) =
         map.off('click', onMapClick);
       };
     }
-  }, [map, quizCreated, questions.length]);
+  }, [map, quizCreated, mapQuestions, questions.length]);
 
   //When user want to do a quiz. On map and question state update, generate markers with respective questions (questions are only available whenever the user want to do a quiz, not create one)
   useEffect(() => {
